@@ -16,7 +16,7 @@ This repository is an **index and reading map**, not a proof repository. It link
 
 ## One-line chain
 
-> Bias selects; complementary axes preserve unrealized alternatives; temporal superposition integrates past, present, preserved alternatives, and possible futures; QuestionField determines what should be actively asked next; LawGenesis tests which candidate patterns survive verification and later use.
+> Bias selects; complementary axes preserve unrealized alternatives; temporal superposition integrates past evidence, present execution, preserved alternatives, and possible future states; QuestionField determines what should be actively asked next; LawGenesis tests candidate patterns through counterexample pressure, verification gates, and later consumption traces.
 
 ## What this series is
 
