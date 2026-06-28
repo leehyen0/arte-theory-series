@@ -73,7 +73,7 @@ or:
 ```text
 select
 → preserve unrealized alternatives
-→ integrate across time
-→ ask active questions
-→ test patterns as candidate laws
+→ integrate past evidence, present execution, preserved alternatives, and possible future states
+→ determine what should be actively asked next
+→ test candidate patterns through counterexample pressure, verification gates, and later consumption traces
 ```
