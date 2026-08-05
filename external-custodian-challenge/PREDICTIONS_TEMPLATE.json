@@ -1,0 +1,14 @@
+{
+  "predictor_id": "frozen-router-identifier",
+  "predicted_at": "ISO-8601 timestamp",
+  "router_freeze_hash": "4287a762c4f58be646e91c0af372b1051550506a31a6ed3c80ceb8f47fe8b0d1",
+  "predictions": [
+    {
+      "task_id": "public task_id from challenge",
+      "prediction": "UNKNOWN",
+      "reason_code": "frozen-output reason code",
+      "confidence": 0.0,
+      "latency_ms": 0.0
+    }
+  ]
+}

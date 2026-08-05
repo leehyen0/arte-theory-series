@@ -1,0 +1,37 @@
+name: External custodian public verifier
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify-public-challenge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install pytest
+      - name: Run standalone verifier self-tests
+        working-directory: external-custodian-challenge
+        run: python -m pytest -q test_public_custodian_verifier.py
+      - name: Verify immutable public file hashes
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+
+          root = Path('external-custodian-challenge')
+          expected = {
+              'README.md': '4abe0858a22c2509b230cbe84dbd83755697dc0977970403fc5f2976661039a9',
+              'REGISTRATION_TEMPLATE.json': '8f1f92495c82a222d44454222060009dd578c2bb957c7fd0cfee3b0bd8489367',
+              'PREDICTIONS_TEMPLATE.json': '912434b90c5501e683b2440ddb3b0837b4cc9ce83a6e33d6889c3b4b31509269',
+              'PROTOCOL_FREEZES.json': '2da01add680a91af5ffdd972a5f8ecaaf00ec99cec5110d1b28ba55fbdf711d1',
+              'CLAIM_BOUNDARY.md': '8af935e7e18d6906fbb41bb4b6603c2b73f1c323c1ed8fd2da08e713fa9b0f23',
+              'public_custodian_verifier.py': 'dc8768010ff5ef3350b6df1be68cf6dc039aaa5c79a97e77b0bf7c1290e39323',
+              'test_public_custodian_verifier.py': '4989edb4d6011940f3916fd48c7f67959b780a4251a616d11b288dfa7d607a92',
+          }
+          for name, digest in expected.items():
+              observed = hashlib.sha256((root / name).read_bytes()).hexdigest()
+              assert observed == digest, (name, observed, digest)
+          PY
