@@ -1,0 +1,12 @@
+{
+  "typed_causal_custody_freeze": "4287a762c4f58be646e91c0af372b1051550506a31a6ed3c80ceb8f47fe8b0d1",
+  "external_custodian_blind_protocol_freeze": "c6f5e17e8e77358c01ee87d3196659fdda44415b32ccd140190d1fc3c09dfdf2",
+  "external_custodian_quorum_protocol_freeze": "540f9b1087643580d21a162174a956e8a15d2ad2de2cc6c64b8bb02b612a0444",
+  "registration_intake_freeze": "6a6af3545716f22a144120323eaca73e086cf6abe9e26bcbfb914774e46f52b1",
+  "classification_alone_external_credit": 0,
+  "patch_authority": false,
+  "identity_independence_verified": false,
+  "independent_external_successes": 0,
+  "agi": false,
+  "asi": false
+}
