@@ -4,6 +4,17 @@ This directory is a **public recruitment and verification surface** for an exter
 
 It is not an AGI/ASI claim, a deployment request, or a request to endorse the project. Classification alone cannot receive open-world transfer credit. A later typed specialist must produce a reversible patch and pass the original repository tests before any external success is recorded.
 
+## Participate
+
+No project-code contribution or endorsement is required. The first step is only a public role claim:
+
+1. read the role boundaries below;
+2. open [registration issue #3](https://github.com/leehyen0/arte-theory-series/issues/3);
+3. post exactly one fenced JSON block using `REGISTRATION_TEMPLATE.json`;
+4. do not post secrets, labels, nonces, private reveals, typed transformations or witness ledgers.
+
+A valid registration comment is recorded only as `ACCEPTED_CLAIM_IDENTITY_UNVERIFIED`. Identity, affiliation and independence require separate verification.
+
 ## Required roles
 
 Two different people are required:
@@ -23,7 +34,7 @@ An optional `timestamp_witness` may record the public challenge, audit commitmen
 
 ## Registration
 
-Open the public issue titled **External custodians wanted for blind ARTE evaluation** in this repository and post exactly one fenced JSON block based on `REGISTRATION_TEMPLATE.json`.
+Open [**External custodians wanted for blind ARTE evaluation**](https://github.com/leehyen0/arte-theory-series/issues/3) and post exactly one fenced JSON block based on `REGISTRATION_TEMPLATE.json`.
 
 Do not publish secrets, nonces, private reveals, expected labels, typed transformations or witness ledgers.
 
