@@ -4,6 +4,20 @@ A theory-first public index for a five-paper sequence on selection, preserved al
 
 This repository is an **index and reading map**, not a proof repository. It links the individual public drafts and explains how they connect.
 
+## External blind evaluation challenge
+
+We are recruiting **two external custodians** to run a public, commit–reveal evaluation of a frozen ARTE causal-authority classifier:
+
+- `selector_labeler` — selects and privately labels previously unused repository issues;
+- `reveal_auditor` — commits to the immutable private reveal before predictions are sealed.
+
+Start here:
+
+- protocol, templates, claim boundaries and standalone verifier: [`external-custodian-challenge/`](external-custodian-challenge/)
+- registration issue: [External custodians wanted for blind ARTE evaluation](https://github.com/leehyen0/arte-theory-series/issues/3)
+
+This is an evaluation role, not a request to endorse AGI/ASI claims, deploy software, or merge project code. Registration claims remain identity-unverified until separately checked, and classification alone receives no open-world transfer credit.
+
 ## Series map
 
 | Paper | Title | Core role | Repository |
