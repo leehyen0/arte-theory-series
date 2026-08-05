@@ -1,0 +1,9 @@
+{
+  "github_login": "your-login",
+  "role": "selector_labeler or reveal_auditor",
+  "affiliation": "organization, school, independent, or undisclosed",
+  "conflict_disclosure": "any relationship to ARTE or none",
+  "public_key_fingerprint": "optional public-key fingerprint",
+  "protocol_freeze_hash": "540f9b1087643580d21a162174a956e8a15d2ad2de2cc6c64b8bb02b612a0444",
+  "attests_no_predictor_access": true
+}
