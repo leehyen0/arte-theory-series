@@ -1,0 +1,25 @@
+name: Public-private Actions discriminator
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  discriminate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    defaults:
+      run:
+        working-directory: public-actions-discriminator
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run redacted discriminator tests
+        run: python -m unittest -v
+      - name: Generate redacted diagnosis
+        run: python public_private_actions_discriminator.py
+
+# Redacted control only. No private repository names, run IDs, job IDs,
+# source code, secrets, deployment, external authority, AGI, or ASI claim.
