@@ -1,0 +1,40 @@
+name: External custodian registration intake
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  validate-registration:
+    if: >-
+      github.event.issue.number == 3 &&
+      github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate comment and post bounded receipt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python external-custodian-challenge/process_registration_comment.py \
+            --event "$GITHUB_EVENT_PATH" \
+            --repository "$GITHUB_REPOSITORY" \
+            --output-dir /tmp/arte-registration-intake \
+            --post-response
+      - name: Upload public intake receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: external-custodian-registration-${{ github.event.comment.id }}
+          path: |
+            /tmp/arte-registration-intake/registration_receipt.json
+            /tmp/arte-registration-intake/registration_registry.json
+            /tmp/arte-registration-intake/registration_response.md
+
+# Active only after this workflow exists on the default branch.
+# Acceptance is syntax/protocol binding only: identity, affiliation, independence,
+# predictor isolation, external quorum, external authority, promotion, AGI, and ASI remain unverified.
