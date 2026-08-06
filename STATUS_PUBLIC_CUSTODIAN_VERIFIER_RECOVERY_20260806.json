@@ -1,0 +1,62 @@
+{
+  "schema": "arte.public_custodian_verifier_recovery.status/v1",
+  "timestamp": "2026-08-06T22:44:00+09:00",
+  "repository_visibility": "public",
+  "pull_request": 5,
+  "branch": "agent/public-actions-control-20260806",
+  "challenge_source_mutated": false,
+  "main_and_branch_challenge_identical": true,
+  "preserved_failure": {
+    "workflow_run_id": 31107183389,
+    "failure_stage": "IMMUTABLE_HASH_ASSERTION",
+    "self_tests_passed": 7,
+    "failed_file": "README.md",
+    "stale_expected_sha256": "4abe0858a22c2509b230cbe84dbd83755697dc0977970403fc5f2976661039a9",
+    "observed_sha256": "e4e8cf9fadf6f9028375ba9f218cc22512bc5c671ba7da6f659d53d6ae100fdd",
+    "candidate_success": false
+  },
+  "hash_audit": {
+    "workflow_run_id": 31107183714,
+    "job_id": 92635280907,
+    "conclusion": "success",
+    "files_audited": 7,
+    "stale_expectations": 1,
+    "matching_expectations": 6
+  },
+  "minimal_correction": {
+    "workflow_only": true,
+    "changed_file": ".github/workflows/external-custodian-public-verifier.yml",
+    "changed_field": "README.md expected SHA-256",
+    "challenge_files_changed": 0
+  },
+  "remote_recovery": {
+    "workflow_run_id": 31107270888,
+    "job_id": 92635583149,
+    "conclusion": "success",
+    "runner_version": "2.336.0",
+    "runner_image": "ubuntu-24.04",
+    "python_version": "3.13.14",
+    "self_tests_passed": 7,
+    "self_tests_failed": 0,
+    "immutable_hashes_passed": 7,
+    "immutable_hashes_failed": 0,
+    "remote_verifier_integrity_validated": true
+  },
+  "external_custodian_state": {
+    "registration_issue": 3,
+    "comments": 0,
+    "selector_labelers_confirmed": 0,
+    "reveal_auditors_confirmed": 0,
+    "quorum_formed": false,
+    "independent_external_successes": 0,
+    "authority": "NULL_NO_EXTERNAL_REGISTRATION"
+  },
+  "authority": "PUBLIC_REMOTE_CUSTODIAN_VERIFIER_INTEGRITY_VALIDATED_EXTERNAL_CUSTODY_NULL",
+  "independent_evaluation": false,
+  "external_authority": false,
+  "open_world_transfer": false,
+  "foundation_model_weight_learning": false,
+  "promotion": false,
+  "agi": false,
+  "asi": false
+}
