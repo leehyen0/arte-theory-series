@@ -1,0 +1,25 @@
+name: External custodian registration intake tests
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-intake:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install pytest
+      - name: Run fail-closed intake tests
+        working-directory: external-custodian-challenge
+        run: |
+          python -m pytest -q \
+            test_public_registration_intake.py \
+            test_process_registration_comment.py
+
+# This workflow validates syntax and registry behavior only.
+# It grants no identity, independence, external authority, promotion, AGI, or ASI credit.
