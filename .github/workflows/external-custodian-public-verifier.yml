@@ -23,7 +23,7 @@ jobs:
 
           root = Path('external-custodian-challenge')
           expected = {
-              'README.md': '4abe0858a22c2509b230cbe84dbd83755697dc0977970403fc5f2976661039a9',
+              'README.md': 'e4e8cf9fadf6f9028375ba9f218cc22512bc5c671ba7da6f659d53d6ae100fdd',
               'REGISTRATION_TEMPLATE.json': '8f1f92495c82a222d44454222060009dd578c2bb957c7fd0cfee3b0bd8489367',
               'PREDICTIONS_TEMPLATE.json': '912434b90c5501e683b2440ddb3b0837b4cc9ce83a6e33d6889c3b4b31509269',
               'PROTOCOL_FREEZES.json': '2da01add680a91af5ffdd972a5f8ecaaf00ec99cec5110d1b28ba55fbdf711d1',
