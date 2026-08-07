@@ -14,9 +14,12 @@ jobs:
         with:
           python-version: '3.13'
       - run: python -m pip install pytest
-      - name: Run fail-closed event-state tests
+      - name: Run fail-closed event-state and processor tests
         working-directory: external-custodian-challenge
-        run: python -m pytest -q test_external_custodian_event_state.py
+        run: |
+          python -m pytest -q \
+            test_external_custodian_event_state.py \
+            test_process_custodian_event_comment.py
       - name: Validate production registry remains empty and fail-closed
         working-directory: external-custodian-challenge
         run: |
