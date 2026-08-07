@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      issues: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -20,13 +21,22 @@ jobs:
           python -m pytest -q \
             test_external_custodian_event_state.py \
             test_process_custodian_event_comment.py
-      - name: Validate production registry remains empty and fail-closed
+      - name: Rebuild live evidence-reviewed authority
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python external-custodian-challenge/build_live_verified_registry.py \
+            --repository "$GITHUB_REPOSITORY" \
+            --token "$GITHUB_TOKEN" \
+            --output /tmp/live-registry.json \
+            --state-output /tmp/live-promotion-state.json
+      - name: Validate event state against the same live registry used in production
         working-directory: external-custodian-challenge
         run: |
           python - <<'PY'
           import json
           import external_custodian_event_state as sm
-          registry=json.load(open('VERIFIED_CUSTODIAN_REGISTRY.json'))
+          registry=json.load(open('/tmp/live-registry.json'))
           problems=sm.validate_verified_registry(registry)
           state=sm.build_state(registry=registry,comments=[],predictor_login='leehyen0')
           assert problems == []
@@ -34,10 +44,11 @@ jobs:
           assert state['verified_external_quorum'] is False
           assert state['external_success'] is False
           assert state['promotion'] is False
-          print('EVENT_STATE_FAIL_CLOSED=true')
+          print('LIVE_EVENT_STATE_FAIL_CLOSED=true')
           print('registry_hash='+registry['registry_hash'])
-          print('state_hash='+state['state_hash'])
+          print('event_state_hash='+state['state_hash'])
           PY
 
-# No identity or independence is inferred from GitHub accounts.
-# The production registry remains empty until separate evidence review.
+# Production authority is rebuilt from issue #3 registration and issue #10 evidence review.
+# The static registry is no longer trusted by the event workflow as live authority.
+# No legal identity, absolute independence, external success, promotion, AGI or ASI is inferred.
