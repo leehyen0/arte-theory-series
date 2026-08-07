@@ -1,0 +1,13 @@
+{
+  "schema": "arte.external_custodian_verified_registry/v1",
+  "registration_issue": 3,
+  "verified_custodians": [],
+  "identity_review_complete": false,
+  "independence_review_complete": false,
+  "external_quorum_formed": false,
+  "authority": "NULL_NO_VERIFIED_EXTERNAL_CUSTODIANS",
+  "promotion": false,
+  "agi": false,
+  "asi": false,
+  "registry_hash": "d5b8ea2f538a6e5104dc986d2bcb8ecc2320e47e2d0f32d529bab78b9c4dfcc9"
+}

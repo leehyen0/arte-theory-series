@@ -1,0 +1,42 @@
+name: External custodian event ledger
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  process-event:
+    if: >-
+      github.event.issue.number == 8 &&
+      github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Rebuild state and post bounded receipt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python external-custodian-challenge/process_custodian_event_comment.py \
+            --event "$GITHUB_EVENT_PATH" \
+            --repository "$GITHUB_REPOSITORY" \
+            --registry external-custodian-challenge/VERIFIED_CUSTODIAN_REGISTRY.json \
+            --output-dir /tmp/arte-custodian-event \
+            --predictor-login leehyen0 \
+            --post-response
+      - name: Upload event-state receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: external-custodian-event-${{ github.event.comment.id }}
+          path: |
+            /tmp/arte-custodian-event/event_receipt.json
+            /tmp/arte-custodian-event/event_state.json
+            /tmp/arte-custodian-event/event_response.md
+
+# Active only on default branch after merge.
+# Empty VERIFIED_CUSTODIAN_REGISTRY.json forces WAITING_FOR_VERIFIED_EXTERNAL_QUORUM.
+# No identity, independence, external success, patch authority, promotion, AGI or ASI is inferred.
