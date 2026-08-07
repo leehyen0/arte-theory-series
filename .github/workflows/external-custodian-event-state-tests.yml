@@ -1,0 +1,40 @@
+name: External custodian event-state tests
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-state-machine:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install pytest
+      - name: Run fail-closed event-state tests
+        working-directory: external-custodian-challenge
+        run: python -m pytest -q test_external_custodian_event_state.py
+      - name: Validate production registry remains empty and fail-closed
+        working-directory: external-custodian-challenge
+        run: |
+          python - <<'PY'
+          import json
+          import external_custodian_event_state as sm
+          registry=json.load(open('VERIFIED_CUSTODIAN_REGISTRY.json'))
+          problems=sm.validate_verified_registry(registry)
+          state=sm.build_state(registry=registry,comments=[],predictor_login='leehyen0')
+          assert problems == []
+          assert state['phase'] == 'WAITING_FOR_VERIFIED_EXTERNAL_QUORUM'
+          assert state['verified_external_quorum'] is False
+          assert state['external_success'] is False
+          assert state['promotion'] is False
+          print('EVENT_STATE_FAIL_CLOSED=true')
+          print('registry_hash='+registry['registry_hash'])
+          print('state_hash='+state['state_hash'])
+          PY
+
+# No identity or independence is inferred from GitHub accounts.
+# The production registry remains empty until separate evidence review.
