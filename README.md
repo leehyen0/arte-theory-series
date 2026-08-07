@@ -11,12 +11,16 @@ We are recruiting **two external custodians** to run a public, commit–reveal e
 - `selector_labeler` — selects and privately labels previously unused repository issues;
 - `reveal_auditor` — commits to the immutable private reveal before predictions are sealed.
 
-Start here:
+Fastest start:
 
-- protocol, templates, claim boundaries and standalone verifier: [`external-custodian-challenge/`](external-custodian-challenge/)
-- registration issue: [External custodians wanted for blind ARTE evaluation](https://github.com/leehyen0/arte-theory-series/issues/3)
+- **short onboarding:** [`external-custodian-challenge/QUICKSTART.md`](external-custodian-challenge/QUICKSTART.md)
+- **local submission preflight:** `python external-custodian-challenge/preflight_external_custodian.py registration --example`
+- **registration issue:** [External custodians wanted for blind ARTE evaluation](https://github.com/leehyen0/arte-theory-series/issues/3)
+- full protocol, templates, claim boundaries and standalone verifier: [`external-custodian-challenge/`](external-custodian-challenge/)
 
-This is an evaluation role, not a request to endorse AGI/ASI claims, deploy software, or merge project code. Registration claims remain identity-unverified until separately checked, and classification alone receives no open-world transfer credit.
+The local preflight checks only JSON shape, frozen hashes, obvious SHA-256 fields, required local attestations and obvious sensitive/private fields. GitHub-side workflows still decide author binding, live registration/evidence references, role conflicts, quorum and event order. A local PASS grants no authority.
+
+This is an evaluation role, not a request to endorse AGI/ASI claims, deploy software, disclose sensitive identity material, or merge project code. Registration claims remain identity-unverified until separately checked, and classification alone receives no open-world transfer credit.
 
 ## Series map
 
