@@ -17,26 +17,40 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Rebuild state and post bounded receipt
+      - name: Rebuild live evidence-reviewed Custodian registry
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python external-custodian-challenge/build_live_verified_registry.py \
+            --repository "$GITHUB_REPOSITORY" \
+            --token "$GITHUB_TOKEN" \
+            --output /tmp/live-verified-custodian-registry.json \
+            --state-output /tmp/live-identity-independence-state.json
+      - name: Rebuild event state and post bounded receipt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python external-custodian-challenge/process_custodian_event_comment.py \
             --event "$GITHUB_EVENT_PATH" \
             --repository "$GITHUB_REPOSITORY" \
-            --registry external-custodian-challenge/VERIFIED_CUSTODIAN_REGISTRY.json \
+            --registry /tmp/live-verified-custodian-registry.json \
             --output-dir /tmp/arte-custodian-event \
             --predictor-login leehyen0 \
             --post-response
-      - name: Upload event-state receipt
+      - name: Upload event-state receipt and live authority provenance
         uses: actions/upload-artifact@v4
         with:
           name: external-custodian-event-${{ github.event.comment.id }}
           path: |
+            /tmp/live-verified-custodian-registry.json
+            /tmp/live-identity-independence-state.json
             /tmp/arte-custodian-event/event_receipt.json
             /tmp/arte-custodian-event/event_state.json
             /tmp/arte-custodian-event/event_response.md
 
-# Active only on default branch after merge.
-# Empty VERIFIED_CUSTODIAN_REGISTRY.json forces WAITING_FOR_VERIFIED_EXTERNAL_QUORUM.
-# No identity, independence, external success, patch authority, promotion, AGI or ASI is inferred.
+# The event ledger no longer trusts the static registry as production authority.
+# It deterministically rebuilds authority from issue #3 registration claims and issue #10
+# evidence/reviewer events on every issue #8 event. Any removed or invalidated evidence
+# therefore removes the corresponding authority on the next rebuild.
+# No legal identity, absolute independence, external success, patch authority, promotion,
+# AGI or ASI is inferred.
