@@ -1,0 +1,50 @@
+name: External custodian identity-independence tests
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-promotion-gate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install pytest
+      - name: Run fail-closed promotion and live-processor tests
+        working-directory: external-custodian-challenge
+        run: python -m pytest -q test_identity_independence_gate.py
+      - name: Rebuild current public registry from issues 3 and 10
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python external-custodian-challenge/build_live_verified_registry.py \
+            --repository "$GITHUB_REPOSITORY" \
+            --token "$GITHUB_TOKEN" \
+            --output /tmp/live-verified-registry.json \
+            --state-output /tmp/live-promotion-state.json
+          python - <<'PY'
+          import json
+          registry=json.load(open('/tmp/live-verified-registry.json'))
+          state=json.load(open('/tmp/live-promotion-state.json'))
+          assert registry['external_quorum_formed'] is False
+          assert state['promoted_custodian_count'] == 0
+          assert registry['external_success'] is False
+          assert registry['promotion'] is False
+          print('LIVE_IDENTITY_INDEPENDENCE_GATE_FAIL_CLOSED=true')
+          print('registry_hash='+registry['registry_hash'])
+          print('state_hash='+state['state_hash'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: current-identity-independence-gate-state
+          path: |
+            /tmp/live-verified-registry.json
+            /tmp/live-promotion-state.json
+
+# Protocol-level evidence review is not legal-identity proof or absolute human-independence proof.
+# Current public world must remain NULL until real external evidence and reviewers appear.
