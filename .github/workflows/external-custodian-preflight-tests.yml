@@ -1,0 +1,39 @@
+name: External custodian preflight tests
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-preflight:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install pytest
+      - name: Run local preflight tests
+        working-directory: external-custodian-challenge
+        run: python -m pytest -q test_preflight_external_custodian.py
+      - name: Demonstrate bounded PASS semantics
+        working-directory: external-custodian-challenge
+        run: |
+          python preflight_external_custodian.py registration --example > /tmp/registration.json
+          python preflight_external_custodian.py registration /tmp/registration.json > /tmp/preflight.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/preflight.json'))
+          assert r['local_preflight_pass'] is True
+          assert r['authority_granted'] is False
+          assert r['independent_evaluation'] is False
+          assert r['external_success'] is False
+          assert r['promotion'] is False
+          assert r['agi'] is False and r['asi'] is False
+          assert r['server_checks_still_required']
+          print('PREFLIGHT_BOUNDARY_FAIL_CLOSED=true')
+          PY
+
+# This workflow validates local submission shape only.
+# It cannot establish identity, independence, external quorum, external success, promotion, AGI or ASI.
