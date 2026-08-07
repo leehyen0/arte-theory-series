@@ -1,0 +1,27 @@
+name: Public custodian hash audit
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-hashes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Print frozen challenge SHA-256 values
+        run: |
+          cd external-custodian-challenge
+          sha256sum \
+            README.md \
+            REGISTRATION_TEMPLATE.json \
+            PREDICTIONS_TEMPLATE.json \
+            PROTOCOL_FREEZES.json \
+            CLAIM_BOUNDARY.md \
+            public_custodian_verifier.py \
+            test_public_custodian_verifier.py
+
+# Read-only hash audit. It does not mutate challenge files, grant external
+# authority, claim independence, promote the system, or claim AGI/ASI.

@@ -1,0 +1,23 @@
+name: Public Actions hosted-runner control
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-control:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Public runner reached executable step
+        run: |
+          echo "ACTIONS_EXECUTABLE_STEP_REACHED=true"
+          echo "PUBLIC_REPOSITORY_CONTROL=true"
+          python --version
+          uname -a
+
+# Control experiment only. No repository code, secret, checkout, deployment,
+# model-weight learning, external authority, AGI, or ASI claim.
